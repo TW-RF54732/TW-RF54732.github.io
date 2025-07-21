@@ -87,12 +87,46 @@ footer {
   padding: 30px 20px;
 }
 
-/* @media (max-width: 768px) {
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #1e293b;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #334155;
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: #1e293b;
+  border: 2px solid #1e293b;
+}
+
+.btn-outline:hover {
+  background-color: #1e293b;
+  color: white;
+}
+
+
+@media (max-width: 768px) {
   .feature-box {
     flex: 1 1 100%;
   }
-} */
-@media (max-width: 768px) {
+
   nav ul {
     flex-direction: column;
     align-items: center;
