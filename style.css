@@ -56,24 +56,54 @@ header h1 {
 }
 
 .features {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 每列兩個欄位 */
   gap: 20px;
 }
 
+/* 每個服務區塊 */
 .feature-box {
-  flex: 1 1 30%;
   background: #fff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-.feature-box h3 {
-  margin-top: 0;
-  color: #1e40af;
+/* 左邊文字區塊 */
+.feature-text {
+  flex: 1 1 50%;
 }
+
+/* 右邊圖片框：固定尺寸 */
+.feature-image {
+  width: 200px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+/* 圖片自適應填滿框 */
+.feature-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 保持比例裁切填滿 */
+  display: block;
+}
+
+/* ✅ 如果總數是奇數，讓最後一個 feature-box 佔滿整列 */
+.features > .feature-box:only-child,
+.features > .feature-box:nth-last-child(1):nth-child(odd) {
+  grid-column: span 2;
+}
+
+
+
+
 
 .image-section img {
   max-width: 100%;
@@ -122,18 +152,26 @@ footer {
 }
 
 
+/* 📱 響應式：手機版單欄排列 */
 @media (max-width: 768px) {
+  .features {
+    grid-template-columns: 1fr;
+  }
+
   .feature-box {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .feature-text,
+  .feature-image {
     flex: 1 1 100%;
   }
 
-  nav ul {
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-  }
-
-  nav ul li a {
-    font-size: 16px;
+  .feature-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
   }
 }
+
