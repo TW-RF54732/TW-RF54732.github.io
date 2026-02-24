@@ -1,0 +1,302 @@
+:root {
+    /* 核心色調 */
+    --bg-main: #000000;
+    --text-white: #ffffff;
+    --text-gray: #a0a0a0;
+    
+    /* 金色系 */
+    --gold-hex: #d4af37;
+    --gold-texture: url('Assets/dark_gold_sub.png'); /* 請確認路徑 */
+    
+    /* 圖片資源 */
+    --logo-texture: url('Assets/black_stone.jpg');   /* 請確認路徑 */
+    --main-bg-image: url('Assets/black_stone_2.jpg'); /* 請確認路徑 */
+
+    /* UI 參數 */
+    --header-bg-transparent: rgba(0, 0, 0, 0.6);
+    --nav-font-size: 15px;
+    --logo-font-size: 2.5rem;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-main);
+    /* 背景疊加層 (讓背景圖暗一點，凸顯文字) */
+    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), var(--main-bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--text-white);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* --- 1. Header 設定 --- */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    
+    /* 半透明背景 + 模糊 */
+    background-color: var(--header-bg-transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: none; /* 無邊框 */
+}
+
+.site-header nav ul {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+}
+
+.site-header a {
+    text-decoration: none;
+    font-size: var(--nav-font-size);
+    color: var(--text-gray);
+    transition: color 0.3s ease;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.site-header a:hover {
+    color: var(--gold-hex);
+}
+
+/* --- 文字紋理特效 --- */
+.textured-stone {
+    font-weight: 900;
+    font-size: var(--logo-font-size);
+    background-image: var(--logo-texture);
+    background-size: cover;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    cursor: default;
+}
+
+.textured-gold {
+    font-weight: 800;
+    
+    /* 1. 確保使用原本的圖片變數 */
+    background-image: var(--gold-texture);
+    
+    /* 2. 關鍵修復：改用 'no-repeat' 防止重複 */
+    background-repeat: no-repeat;
+    
+    /* 3. 關鍵修復：位置強制置中，確保我們用到圖片最亮的中心點 */
+    background-position: 0px center;
+    
+    /* 4. 關鍵修復：放大比例 (例如 120% 或 150%) 
+       這樣可以把圖片邊緣較黑的部分「推」出去，只保留中間金色的部分 */
+    background-size: 150% auto; 
+    
+    /* 5. 讓背景範圍緊貼文字，不要撐滿整行 (這能避免吃到左右兩邊的暗角) */
+    display: inline-block;
+    
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    
+    /* 維持原本的光暈 */
+    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.2)); 
+}
+
+/* --- 2. Hero 區域佈局 (置中修正版) --- */
+.hero-container {
+    display: flex;
+    justify-content: center; /* 水平置中 */
+    align-items: center;     /* 垂直置中 */
+    min-height: calc(100vh - 80px);
+    padding: 0 5%;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; /* 內容置中，不往兩邊推 */
+    
+    /* 控制文字與頭像之間的距離 (關鍵) */
+    gap: 80px; 
+    
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* 響應式設定 (手機板) */
+@media (max-width: 900px) {
+    .hero-content {
+        flex-direction: column-reverse;
+        text-align: center;
+        gap: 40px;
+        padding-top: 2rem;
+    }
+    .site-header { padding: 1rem; }
+    .site-header nav ul { gap: 15px; }
+    
+    /* 手機版文字靠中 */
+    .hero-text { 
+        align-items: center; 
+        text-align: center;
+    }
+}
+
+/* --- 左側文字 --- */
+.hero-text {
+    /* 移除 flex: 1，改為自然寬度 */
+    flex: 0 1 auto; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 文字靠左對齊 */
+    max-width: 500px;
+}
+
+.greeting {
+    font-size: 1.2rem;
+    color: var(--text-white);
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+}
+
+.main-title {
+    font-size: 5rem;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.description {
+    color: var(--text-gray);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.highlight-gold {
+    color: var(--gold-hex);
+    font-weight: bold;
+}
+
+/* --- 3. Social Buttons (方形風格) --- */
+.social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.social-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 55px;
+    height: 55px;
+    font-size: 1.5rem;
+    color: var(--gold-hex);
+    text-decoration: none;
+    
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 12px; /* 微圓角 */
+    background: rgba(255, 255, 255, 0.03);
+    
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.social-btn:hover {
+    background: var(--gold-hex);
+    color: #000;
+    border-color: var(--gold-hex);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+
+/* --- 4. Avatar (方形風格) --- */
+.hero-avatar {
+    /* 移除 flex: 1，改為固定不縮放 */
+    flex: 0 0 auto; 
+    display: flex;
+    justify-content: center;
+}
+
+.avatar-glow {
+    position: relative;
+    width: 380px;
+    aspect-ratio: 1 / 1;
+}
+
+.avatar-glow img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 24px; /* 方形圓角 */
+}
+
+/* 方形光暈 (初始狀態) */
+.avatar-glow::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 24px;
+    box-shadow: 0 0 80px rgba(212, 175, 55, 0.15); 
+    z-index: -1;
+    transition: box-shadow 0.5s ease;
+}
+
+/* 懸停時觸發動畫 */
+.avatar-glow:hover::after {
+    transition: none; /* 關閉過渡，讓閃爍銳利 */
+    animation: irregular-flicker 5s linear infinite; /* 5秒循環 */
+    
+    /* 確保第一幀是亮的 */
+    opacity: 1;
+    box-shadow: 0 0 100px rgba(212, 175, 55, 0.4);
+}
+
+/* --- Footer --- */
+.site-footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* --- 接觸不良動畫 (平均分佈版) --- */
+@keyframes irregular-flicker {
+    /* 0~20%: 穩定亮 */
+    0%, 20% { opacity: 1; box-shadow: 0 0 100px rgba(212, 175, 55, 0.4); }
+
+    /* 第一次閃爍 (輕微) */
+    21% { opacity: 0.3; box-shadow: 0 0 10px rgba(212, 175, 55, 0.05); }
+    22% { opacity: 1;   box-shadow: 0 0 120px rgba(212, 175, 55, 0.6); }
+    23% { opacity: 1;   box-shadow: 0 0 100px rgba(212, 175, 55, 0.4); }
+
+    /* 休息 (23~45%) */
+    23.1%, 45% { opacity: 1; box-shadow: 0 0 100px rgba(212, 175, 55, 0.4); }
+
+    /* 第二次閃爍 (強烈爆閃) */
+    46% { opacity: 0.5; box-shadow: 0 0 30px rgba(212, 175, 55, 0.2); }
+    46.5% { opacity: 1; box-shadow: 0 0 160px rgba(255, 230, 100, 1); }
+    47% { opacity: 0.8; box-shadow: 0 0 80px rgba(212, 175, 55, 0.3); }
+    48% { opacity: 1;   box-shadow: 0 0 100px rgba(212, 175, 55, 0.4); }
+
+    /* 休息 (48~75%) */
+    48.1%, 75% { opacity: 1; box-shadow: 0 0 100px rgba(212, 175, 55, 0.4); }
+
+    /* 第三次閃爍 (抖動) */
+    76% { opacity: 0.6; }
+    76.5% { opacity: 1; }
+    77% { opacity: 0.4; box-shadow: 0 0 20px rgba(212, 175, 55, 0.1); }
+    78% { opacity: 1;   box-shadow: 0 0 100px rgba(212, 175, 55, 0.4); }
+
+    /* 結尾穩定 (78~100%) */
+    78.1%, 100% { opacity: 1; box-shadow: 0 0 100px rgba(212, 175, 55, 0.4); }
+}
